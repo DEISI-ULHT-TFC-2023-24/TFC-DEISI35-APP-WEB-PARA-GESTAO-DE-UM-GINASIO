@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bem-Vindo à PT-Clinic</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" />
+
+      <link rel="stylesheet" href="{% static 'css/layout-cliente.css' %}">
+
+  </head>
+  <body>
+  <header>
+      <div class="navbar">
+        <div class="content-1">
+          <div class="column"></div>
+          <div class="column-2">
+            <div class="column-3">
+              <span class="home">Home</span
+              ><span class="minhas-aulas">Minhas Aulas</span
+              ><span class="agendar-aulas">Agendar Aulas</span>
+              <div class="nav-link-dropdown">
+                <span class="servicos">Serviços</span>
+                <div class="chevron-down"><div class="vector"></div></div>
+              </div>
+            </div>
+            <button class="button">
+              <span class="messages">Mensagens </span></button
+            ><button class="button-4">
+              <span class="button-5">Sair</span>
+            </button>
+          </div>
+        </div>
+        <div class="content-6"></div>
+      </div>
+      <div class="pt-x"></div>
+      <div class="_n"></div>
+  </header>
+
+{% block content %}
+<!-- O conteúdo principal da página será inserido aqui pelas páginas filhas -->
+{% endblock %}
+
+  <footer>
+      <div class="footer">
+        <div class="content">
+          <div class="logo"></div>
+          <div class="links">
+            <span class="home-link">Home</span
+            ><span class="blog-link">Blog</span
+            ><span class="contacts-link">Contactos</span
+            ><span class="services">Serviços</span
+            ><span class="link-five">Link Five</span>
+          </div>
+        </div>
+        <div class="credits">
+          <div class="divider"></div>
+          <div class="row">
+            <span class="text-copyright"
+              >© 2024 Relume. All rights reserved.</span>
+            <div class="footer-links">
+              <span class="privacy-policy">Privacy Policy</span
+              ><span class="terms-of-service">Terms of Service</span
+              ><span class="cookies-settings">Cookies Settings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </footer>
+  </body>
+</html>
