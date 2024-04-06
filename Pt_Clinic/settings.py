@@ -119,13 +119,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Aqui, estamos definindo STATIC_ROOT para um diretório chamado 'staticfiles' no nível do projeto.
+# Este diretório é onde os arquivos estáticos serão coletados quando você rodar 'collectstatic'.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# STATICFILES_DIRS é onde o Django procurará por arquivos estáticos adicionais, além dos que se encontram em cada app 'static'.
+# Supondo que você quer manter os arquivos estáticos do projeto em um diretório separado dentro da aplicação 'Cliente',
+# você deverá apontar para esse diretório aqui.
 STATICFILES_DIRS = [
-    BASE_DIR / 'Cliente/static',
+    os.path.join(BASE_DIR, 'Cliente', 'static'),
+
 ]
 
+# MEDIA_ROOT é onde os arquivos carregados pelos usuários serão armazenados.
+# Eles não devem ser colocados sob o diretório 'static', então nós os colocamos diretamente sob 'media' no nível do projeto.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Cliente/static/media')
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 # Default primary key field type
