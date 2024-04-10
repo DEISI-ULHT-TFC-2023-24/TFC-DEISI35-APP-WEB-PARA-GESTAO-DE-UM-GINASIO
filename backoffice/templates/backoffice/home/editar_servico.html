@@ -1,0 +1,41 @@
+{% if card_id == '1' %}
+    <h2>Editar Card 1</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.titulo }}
+        {{ form.descricao }}
+        {{ form.imagem }}
+        {{ form.link }}
+        <button type="submit">Salvar Card 1</button>
+    </form>
+{% elif card_id == '2' %}
+    <h2>Editar Card 2</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.card2_titulo }}
+        {{ form.card2_descricao }}
+        {{ form.card2_imagem }}
+        {{ form.card2_link }}
+        <button type="submit">Salvar Card 2</button>
+    </form>
+{% elif card_id == '3' %}
+    <h2>Editar Card 3</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.card3_titulo }}
+        {{ form.card3_descricao }}
+        {{ form.card3_imagem }}
+        {{ form.card3_link }}
+        <button type="submit">Salvar Card 3</button>
+    </form>
+{% elif card_id == '4' %}
+    <h2>Editar Card 4</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.card4_titulo }}
+        {{ form.card4_descricao }}
+        {{ form.card4_imagem }}
+        {{ form.card4_link }}
+        <button type="submit">Salvar Card 4</button>
+    </form>
+{% endif %}

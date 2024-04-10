@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+<main>
+
+    <div class="user-login">
+
+        <div class="login">
+            <div class="logo">
+                <img width="118px" height="117px" src="{% static 'images/PT x.jpg' %}" alt="">
+            </div>
+
+            <div class="login-content">
+                <div class="title">
+                    <h1>Gestão de Utilizador</h1>
+                    <p>Acesso seguro à área de gestão da PT Clinic.
+                        Por favor, insira suas credenciais para continuar.</p>
+                </div>
+
+                <div class="form">
+                    <div class="form">
+                        <form method="post" action="{% url 'backoffice:login' %}">
+                            <!-- Substitua 'backoffice:login' se você estiver usando um namespace diferente -->
+                            {% csrf_token %}
+                            <div class="name-input">
+                                <div class="nome">
+                                    <span>Nome*</span>
+                                </div>
+                                <div class="input-1">
+                                    <label>
+                                        <input type="text" name="username" placeholder="Nome de usuário">
+                                        <!-- 'username' é o nome padrão esperado pelo Django -->
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="name-input">
+                                <div class="senha-input">
+                                    <div class="senha">
+                                        <span>Senha*</span>
+                                    </div>
+                                    <div class="forgot">
+                                        <a href="{% url 'backoffice:login' %}">Esqueceu a senha?</a>
+                                        <!-- Certifique-se de ter a rota de reset de senha configurada -->
+                                    </div>
+                                </div>
+                                <div class="input-2">
+                                    <label>
+                                        <input type="password" name="password" placeholder="Senha">
+                                        <!-- 'password' é o nome padrão esperado pelo Django -->
+                                    </label>
+                                </div>
+                            </div>
+
+                            {% if messages %}
+                                <div class="message-container">
+                                    {% for message in messages %}
+                                        <p class="message {{ message.tags }}">{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="entrar-button">
+                                <button type="submit">Entrar</button>
+                            </div>
+                            <div class="conta-link">
+                                <div class="text">
+                                    <p>Não tem nenhuma conta?</p>
+                                </div>
+                                <div class="link">
+                                    <!-- Coloque o link correto para contato administrativo -->
+                                    <a href="{% url 'backoffice:login' %}">Contacte a parte Administrativa</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="relume">
+                <p>© 2024 PT Clinic</p>
+            </div>
+        </div>
+
+        <div class="backoffice-image">
+            <img width="720px" height="939px" src="{% static 'images/backoffice-destaque.png' %}" alt="">
+        </div>
+    </div>
+</main>
+</body>
+</html>

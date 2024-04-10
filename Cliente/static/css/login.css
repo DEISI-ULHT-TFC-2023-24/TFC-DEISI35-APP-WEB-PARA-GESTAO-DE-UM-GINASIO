@@ -1,0 +1,123 @@
+body {
+    width: 100%;
+    height: 100vh;
+    margin-top: 0;
+}
+
+.user-login {
+    display: flex;
+}
+
+.user-login a {
+    text-decoration-color: black;
+    color: black;
+}
+
+.login {
+    width: 50%;
+    margin-left: 57px;
+}
+
+.login .login-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-top: 70px;
+    width: 480px;
+    height: 567px;
+}
+
+.login .login-content .title {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.login .login-content .title h1 {
+    font-size: 48px;
+}
+
+
+.login .login-content .form form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 20px;
+}
+
+.form form .name-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form form .name-input input {
+    width: 480px;
+    height: 48px;
+    padding: 4px;
+}
+
+.form form .entrar-button button {
+    width: 490px;
+    height: 48px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.form form .entrar-button button:hover {
+    background-color: lightgrey;
+    color: black;
+    border: grey;
+}
+
+.senha-input {
+    display: flex;
+    width: 480px;
+    justify-content: space-between;
+}
+
+.form .conta-link {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.relume {
+    margin-top: 4em;
+    display: flex;
+    align-items: flex-start;
+}
+
+.user-login .feedback {
+    background-color: lightgrey;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.user-login .feedback .feedback-client {
+    padding: 64px;
+    width: 592px;
+}
+
+.user-feeback {
+    display: flex;
+    gap: 3em;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-feeback .user {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    justify-content: center;
+}
+
+.user-name {
+    text-align: left;
+}
