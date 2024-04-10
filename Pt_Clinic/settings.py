@@ -123,17 +123,17 @@ STATIC_URL = '/static/'
 # Este diretório é onde os arquivos estáticos serão coletados quando você rodar 'collectstatic'.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# STATICFILES_DIRS é onde o Django procurará por arquivos estáticos adicionais, além dos que se encontram em cada app 'static'.
-# Supondo que você quer manter os arquivos estáticos do projeto em um diretório separado dentro da aplicação 'Cliente',
-# você deverá apontar para esse diretório aqui.
+# STATICFILES_DIRS é onde o Django procurará por arquivos estáticos adicionais, além dos que se encontram em cada app
+# 'static'. Supondo que você quer manter os arquivos estáticos do projeto em um diretório separado dentro da
+# aplicação 'Cliente', você deverá apontar para esse diretório aqui.
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Cliente', 'static'),
     os.path.join(BASE_DIR, 'backoffice', 'static'),
 
 ]
 
-# MEDIA_ROOT é onde os arquivos carregados pelos usuários serão armazenados.
-# Eles não devem ser colocados sob o diretório 'static', então nós os colocamos diretamente sob 'media' no nível do projeto.
+# MEDIA_ROOT é onde os arquivos carregados pelos usuários serão armazenados. Eles não devem ser colocados sob o
+# diretório 'static', então nós os colocamos diretamente sob 'media' no nível do projeto.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 

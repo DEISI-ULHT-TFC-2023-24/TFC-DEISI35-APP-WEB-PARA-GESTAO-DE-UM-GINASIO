@@ -7,7 +7,7 @@
     <title>Bem-Vindo à PT-Clinic</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap"/>
 
-    <link rel="stylesheet" href="{% static 'css/layout-cliente.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout-backoffice/layout-backoffice.css' %}">
 
     {% block extra_css %}
     {% endblock %}
@@ -22,14 +22,14 @@
             </div>
             <div class="right">
                 <a href="#home">Home</a>
-                <a href="#minhasaulas">Minhas Aulas</a>
-                <a href="#agendaraulas">Agendar Aulas</a>
+                <a href="#geriraulas">Gerir Aulas</a>
+                <a href="#gerirvisitas">Gerir Visitas</a>
                 <div class="link-dropdown">
-                    <a href="#servicos">Serviços</a>
+                    <a href="#outros-servicos">Outros Serviços</a>
                     <img src="{% static 'images/expand_more_FILL1_wght400_GRAD0_opsz24.png' %}" alt="">
                 </div>
                 <button class="button">
-                    <span class="messages">Mensagens </span></button>
+                    <span class="messages">Mensagens</span></button>
                 <button class="button-2">
                     <span class="button-5">Sair</span>
                 </button>
@@ -49,17 +49,16 @@
         <div class="content">
             <div class="links">
             <span class="home-link">Home</span
-            ><span class="blog-link">Blog</span
-            ><span class="contacts-link">Contactos</span
-            ><span class="services">Serviços</span
-            ><span class="link-five">Link Five</span>
+            ><span class="blog-link">Gerir Aulas</span
+            ><span class="contacts-link">Gerir Visitas</span
+            ><span class="services">Serviços</span>
             </div>
         </div>
         <div class="credits">
             <div class="divider"></div>
             <div class="row">
             <span class="text-copyright"
-            >© 2024 Relume. All rights reserved.</span>
+            >© 2024 PT Clinic. All rights reserved.</span>
                 <div class="footer-links">
               <span class="privacy-policy">Privacy Policy</span
               ><span class="terms-of-service">Terms of Service</span

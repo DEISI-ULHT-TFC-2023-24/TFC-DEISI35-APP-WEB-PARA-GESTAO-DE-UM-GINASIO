@@ -1,15 +1,17 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.cache import never_cache
 
 from .models import CampanhaPromocional, BlogPost, EventoDestaque, CadastroImage, Servico
+from django.contrib.auth import login
 
 
 def cliente(request):
     campanhas = CampanhaPromocional.objects.all()
     posts = BlogPost.objects.all()
     eventos = EventoDestaque.objects.all()
-    return render(request, 'area-cliente.html', {
+    return render(request, 'cliente/area_cliente/area-cliente.html', {
         'campanhas': campanhas,
         'posts': posts,
         'eventos': eventos
@@ -24,14 +26,10 @@ def home(request):
         'cadastro_image': cadastro_image,
         'servicos': servicos,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'cliente/hero_page/home.html', context)
 
 
 # Limite
-
-
-def login(request):
-    return render(request, 'login.html')
 
 
 def login_view(request):
@@ -45,7 +43,12 @@ def login_view(request):
             return redirect(reverse('area_cliente'))
         else:
             # Retorna uma mensagem de erro se o login não for válido
-            return render(request, 'login.html', {'error_message': 'Login inválido'})
+            return render(request, 'cliente/login/login.html', {'error_message': 'Login inválido'})
     else:
         # Se não é um POST, renderiza a página de login normalmente
-        return render(request, 'login.html')
+        return render(request, 'cliente/login/login.html')
+
+@never_cache
+def logout_view(request):
+        logout(request)
+        return redirect('home')

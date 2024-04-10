@@ -1,0 +1,105 @@
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'css/login/login.css' %}">
+    </head>
+    <body>
+    <main>
+
+        <div class="user-login">
+
+            <div class="login">
+                <div class="logo">
+                    <img width="118px" height="117px" src="{% static 'images/PT x.jpg' %}" alt="">
+                </div>
+
+                <div class="login-content">
+                    <div class="title">
+                        <h1>Bem-vindo de Volta à PT Clinic</h1>
+                        <p>Faça login para acessar seu perfil e agendar suas aulas.</p>
+                    </div>
+
+                    <div class="form">
+                        <form method="post" action="{% url 'login_view' %}">
+                            {% csrf_token %}
+                            <div class="name-input">
+                                <div class="nome">
+                                    <span>Nome*</span>
+                                </div>
+                                <div class="input-1">
+                                    <label>
+                                        <input type="text" name="username" placeholder="Nome">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="name-input">
+                                <div class="senha-input">
+                                    <div class="senha">
+                                        <span>Senha*</span>
+                                    </div>
+                                    <div class="forgot">
+                                        <a href="">Esqueceu a senha?</a>
+                                    </div>
+                                </div>
+
+                                <div class="input-2">
+                                    <label>
+                                        <input type="password" name="password" placeholder="Senha" >
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="entrar-button">
+                                <button type="submit">Entrar</button>
+                            </div>
+
+                            <div class="conta-link">
+                                <div class="text">
+                                    <p>Não tem nenhuma conta?</p>
+                                </div>
+                                <div class="link">
+                                    <a href="">Cadastre-se</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="relume">
+                    <p>© 2024 PT Clinic</p>
+                </div>
+            </div>
+
+            <div class="feedback">
+                <div class="feedback-client">
+                    <div class="stars">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+                            elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla."</h3>
+                    </div>
+                    <div class="user-feeback">
+                        <div class="user">
+                            <div class="user-foto">
+                                <img src="{% static 'images/account_circle_FILL1_wght400_GRAD0_opsz48.png' %}" alt="">
+                            </div>
+                            <div class="user-name">
+                                <p>Name Surname</p>
+                                <p>Position, Company name</p>
+                            </div>
+                        </div>
+
+                        <div class="logo-ptclinic">
+                            <img width="65px" src="{% static 'images/fitness-pt.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </body>
+    </html>

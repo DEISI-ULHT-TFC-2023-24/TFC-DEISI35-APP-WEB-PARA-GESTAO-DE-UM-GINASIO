@@ -3,15 +3,17 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from Cliente.models import CadastroImage, Servico
-from .forms import CadastroImageForm, ServicoForm
+from .forms import CadastroImageForm, ServicoForm, ClienteUserForm
 
 
 # backoffice/views.py
 
+def central(request):
+    return render(request, 'backoffice/central-page/central.html')
 
 def home_backoffice(request):
     cadastro_image = CadastroImage.objects.first()  # Assume-se que haja apenas uma imagem de cadastro
@@ -90,20 +92,14 @@ def backoffice_login(request):
     return render(request, 'backoffice/login-backoffice/login.html', {'form': form})
 
 
-@login_required
-@user_passes_test(check_is_staff)
-def adicionar_cadastro_imagem(request):
+def create_cliente_user(request):
     if request.method == 'POST':
-        form = CadastroImageForm(request.POST, request.FILES)
+        form = ClienteUserForm(request.POST)
         if form.is_valid():
-            nova_imagem = form.save(commit=False)
-            nova_imagem.save()
-            # Redirecionar para onde você precisa após o sucesso
-            return redirect('backoffice:home_backoffice')
-        else:
-            # Se o formulário não for válido, você pode querer ver os erros
-            print(form.errors)
+            form.save()
+            messages.success(request, 'Usuário criado com sucesso!')
+            # Aqui você pode redirecionar para a página de sucesso ou de listagem de usuários
+            return redirect('backoffice:central')
     else:
-        form = CadastroImageForm()
-
-    return render(request, 'backoffice/home/adicionar_cadastro_imagem.html', {'form': form})
+        form = ClienteUserForm()
+    return render(request, 'backoffice/cliente-user-account/criar_cliente.html', {'form': form})

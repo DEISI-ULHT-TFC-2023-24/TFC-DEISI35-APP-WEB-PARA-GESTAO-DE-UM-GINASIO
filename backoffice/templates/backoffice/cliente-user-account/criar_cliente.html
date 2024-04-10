@@ -1,0 +1,15 @@
+<h2>Criar Usuário Cliente</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+</form>
