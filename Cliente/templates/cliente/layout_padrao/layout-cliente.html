@@ -19,7 +19,7 @@
     <section id="home">
         <nav class="navbar">
             <div class="left">
-                <img width="185px" height="185px" src="{% static 'images/PT x.jpg' %}" alt="">
+                <a href="{% url 'cliente:home' %}"><img width="185px" height="185px" src="{% static 'images/PT x.jpg' %}" alt=""></a>
             </div>
             <div class="right">
                 <a href="#home">Home</a>
@@ -31,7 +31,7 @@
                 </div>
                 <button class="button">
                     <span class="messages">Mensagens </span></button>
-                <form action="{% url 'logout' %}" method="post">
+                <form action="{% url 'cliente:login_view' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="button-2">
                         <span class="button-5">Sair</span>

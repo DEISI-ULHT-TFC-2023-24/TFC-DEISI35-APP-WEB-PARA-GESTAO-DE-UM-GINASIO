@@ -71,6 +71,8 @@ def check_is_staff(user):
     return user.is_staff
 
 
+from django.shortcuts import redirect
+
 def backoffice_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -81,7 +83,8 @@ def backoffice_login(request):
             if user is not None:
                 if user.is_active and user.is_staff:
                     login(request, user)
-                    return redirect(reverse('backoffice:home_backoffice'))
+                    # Redireciona para uma página de dashboard ou outra página do backoffice
+                    return redirect('backoffice:home_backoffice')  # Certifique-se de substituir 'backoffice:dashboard' pelo nome correto da sua URL de destino
                 else:
                     messages.error(request, 'A conta não tem permissões para acessar essa área.')
             else:
@@ -91,6 +94,7 @@ def backoffice_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'backoffice/login-backoffice/login.html', {'form': form})
+
 
 
 @never_cache

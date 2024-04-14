@@ -1,6 +1,5 @@
 from django.contrib.auth import authenticate, logout
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.decorators.cache import never_cache
 
 from .models import CampanhaPromocional, BlogPost, EventoDestaque, CadastroImage, Servico
@@ -41,19 +40,15 @@ def login_view(request):
             if user.is_active:  # Verifica se o usuário está ativo
                 login(request, user)
                 # Redireciona para a área do cliente
-                return redirect(reverse('area_cliente'))
+                return redirect('cliente:area_cliente')
             else:
-                # Se o usuário não está ativo, retorna uma mensagem de erro
                 return render(request, 'cliente/login/login.html', {'error_message': 'Sua conta está desativada.'})
         else:
-            # Retorna uma mensagem de erro se o login não for válido
             return render(request, 'cliente/login/login.html', {'error_message': 'Login inválido'})
     else:
-        # Se não é um POST, renderiza a página de login normalmente
         return render(request, 'cliente/login/login.html')
-
 
 @never_cache
 def logout_view(request):
-        logout(request)
-        return redirect('home')
+    logout(request)
+    return redirect('cliente:home')

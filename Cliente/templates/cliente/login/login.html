@@ -13,7 +13,7 @@
 
         <div class="login">
             <div class="logo">
-                <img width="118px" height="117px" src="{% static 'images/PT x.jpg' %}" alt="">
+                <a href="{% url 'cliente:home' %}"><img width="118px" height="117px" src="{% static 'images/PT x.jpg' %}" alt=""></a>
             </div>
 
             <div class="login-content">
@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="form">
-                    <form method="post" action="{% url 'login_view' %}">
+                    <form method="post" action="{% url 'cliente:login_view' %}">
                         {% csrf_token %}
                         <div class="name-input">
                             <div class="nome">

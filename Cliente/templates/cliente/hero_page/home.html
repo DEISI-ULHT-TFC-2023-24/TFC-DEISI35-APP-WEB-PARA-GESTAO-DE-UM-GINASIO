@@ -8,7 +8,25 @@
     <link rel="stylesheet" href="{% static 'css/hero_page/home.css' %}">
 </head>
 <body>
+    <style>
+        .whatsapp-icon {
+            position: fixed;
+            bottom: 10em;
+            right: 5em;
+            z-index: 1000;
+        }
 
+        .whatsapp-link img {
+            width: 60px;
+            height: auto;
+        }
+    </style>
+
+    <div class="whatsapp-icon">
+        <a href="https://wa.me/351934499614" target="_blank" class="whatsapp-link">
+            <img class="whatsapp-icon" src="{% static 'images/whatsapp.png' %}" alt="WhatsApp">
+        </a>
+    </div>
 <section id="home">
     <header>
         <nav class="navbar">
@@ -21,11 +39,11 @@
                 <a href="#contacto">Contactos</a>
                 <a href="#services">Serviços</a>
                 <div class="button">
-                    <button onclick="window.location.href='{% url 'login_view' %}'">Agendamento
+                    <button onclick="window.location.href='{% url 'cliente:login_view' %}'">Agendamento
                     </button>
                 </div>
                 <div class="button-2">
-                    <button onclick="window.location.href='{% url 'login_view' %}'">Área de
+                    <button onclick="window.location.href='{% url 'cliente:login_view' %}'">Área de
                         Cliente
                     </button>
                 </div>
@@ -154,7 +172,7 @@
 
         <div class="form-content">
 
-            <form action="{% url 'area_cliente' %}" method="post" class="form-1">
+            <form action="{% url 'cliente:area_cliente' %}" method="post" class="form-1">
                 <div class="input-nome">
                     <span class="name"> Nome</span>
                     <div>
