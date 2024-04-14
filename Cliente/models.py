@@ -65,7 +65,7 @@ class Cliente(models.Model):
                     'Assunto do Email',
                     f'Mensagem de {nome} ({email}): {mensagem}',
                     'email_do_remetente@seusite.com',  # O e-mail que você está enviando.
-                    ['destinatario@example.com'],  # Para quem você está enviando.
+                    ['wisley.costa99@hotmail.com'],  # Para quem você está enviando.
                     fail_silently=False,
                 )
                 return HttpResponse("Email enviado com sucesso!")

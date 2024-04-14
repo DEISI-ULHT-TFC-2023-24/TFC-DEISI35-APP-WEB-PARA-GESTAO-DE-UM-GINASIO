@@ -38,15 +38,20 @@ def login_view(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            # Redireciona para a área do cliente
-            return redirect(reverse('area_cliente'))
+            if user.is_active:  # Verifica se o usuário está ativo
+                login(request, user)
+                # Redireciona para a área do cliente
+                return redirect(reverse('area_cliente'))
+            else:
+                # Se o usuário não está ativo, retorna uma mensagem de erro
+                return render(request, 'cliente/login/login.html', {'error_message': 'Sua conta está desativada.'})
         else:
             # Retorna uma mensagem de erro se o login não for válido
             return render(request, 'cliente/login/login.html', {'error_message': 'Login inválido'})
     else:
         # Se não é um POST, renderiza a página de login normalmente
         return render(request, 'cliente/login/login.html')
+
 
 @never_cache
 def logout_view(request):

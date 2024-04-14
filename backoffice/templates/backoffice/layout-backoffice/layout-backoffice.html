@@ -22,17 +22,20 @@
             </div>
             <div class="right">
                 <a href="#home">Home</a>
-                <a href="#geriraulas">Gerir Aulas</a>
-                <a href="#gerirvisitas">Gerir Visitas</a>
+                <a href="#">Gerir Aulas</a>
+                <a href="#">Gerir Visitas</a>
                 <div class="link-dropdown">
-                    <a href="#outros-servicos">Outros Serviços</a>
+                    <a href="#">Outros Serviços</a>
                     <img src="{% static 'images/expand_more_FILL1_wght400_GRAD0_opsz24.png' %}" alt="">
                 </div>
                 <button class="button">
                     <span class="messages">Mensagens</span></button>
-                <button class="button-2">
-                    <span class="button-5">Sair</span>
-                </button>
+                <form action="{% url 'backoffice:backoffice_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="button-2">
+                        <span class="button-5">Sair</span>
+                    </button>
+                </form>
             </div>
         </nav>
     </section>

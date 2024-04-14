@@ -88,11 +88,6 @@ body {
     border: 1px solid #19d1c3;
 }
 
-#cadastro .image img{
-
-
-}
-
 
 #cadastro .cadastro-content .text-content {
     display: flex;
@@ -619,4 +614,24 @@ body {
     text-decoration: none;
 }
 
+
+.whatsapp-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .whatsapp-link {
+    display: inline-block;
+    background-color: #25D366;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  }
+
+  .whatsapp-link img {
+    width: 50px;
+    height: auto;
+  }
 

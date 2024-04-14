@@ -1,5 +1,6 @@
 {% extends 'backoffice/layout-backoffice/layout-backoffice.html' %}
-{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Bem-Vindo à PT-Clinic</title>
 
+    {% load static %}
+
     {% block extra_css %}
         <link rel="stylesheet" href="{% static 'css/home_backoffice/home_backoffice.css' %}">
     {% endblock %}
 </head>
 <body>
+
 {% block content %}
+    <style>
+        .whatsapp-icon {
+            position: fixed;
+            bottom: 10em;
+            right: 5em;
+            z-index: 1000;
+        }
+
+        .whatsapp-link img {
+            width: 60px;
+            height: auto;
+        }
+    </style>
+
+    <div class="whatsapp-icon">
+        <a href="https://wa.me/351934499614" target="_blank" class="whatsapp-link">
+            <img class="whatsapp-icon" src="{% static 'images/whatsapp.png' %}" alt="WhatsApp">
+        </a>
+    </div>
     <section id="cadastro">
         <div class="cadastro-content">
             <div class="text-content">
@@ -34,11 +57,14 @@
                     Ao clicar em Cadastrar você confirma que concorda com nossos Termos e Condições.
                 </div>
             </div>
+            <!-- Algum lugar no seu template no app Cliente -->
+
             <div class="image">
                 {% if cadastro_image %}
-                    <img width="600px" height="550px" src="{{ cadastro_image.image.url }}" alt="Imagem de Cadastro">
+                    <img width="600px" height="520px" src="{{ cadastro_image.image.url }}" alt="Imagem de Cadastro">
                     {% if request.user.is_authenticated and request.user.is_staff %}
-                        <a href="{% url 'backoffice:editar_cadastro_imagem' cadastro_image.pk %}">Editar Imagem</a>
+                        <a href="{% url 'backoffice:editar_cadastro_imagem' cadastro_image.pk %}">
+                            Editar</a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -51,80 +77,78 @@
                 <h1>Descubra o Caminho para o Bem-Estar e Performance com a PT Clinic</h1>
             </div>
             <div class="content-1">
-                <div class="card-1">
+                <!-- Card 1 -->
+                <div class="card">
                     <div class="image-title">
-                        {% if servicos.imagem %}
-                            <img height="160px" src="{{ servicos.imagem.url }}" alt="{{ servicos.titulo }}">
+                        {% if servicos.0.imagem %}
+                            <img height="160px" src="{{ servicos.0.imagem.url }}" alt="{{ servicos.0.titulo }}">
                         {% else %}
-                            <img height="160px" src="{% static 'images/treino-personalizado.png' %}"
-                                 alt="Imagem padrão">
+                            <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
                         {% endif %}
-                        <h3>{{ servicos.titulo }}</h3>
-                        <p>{{ servicos.descricao }}</p>
+                        <h3>{{ servicos.0.titulo }}</h3>
+                        <p>{{ servicos.0.descricao }}</p>
                     </div>
                     <div class="more-info">
-                        <a href="{{ servicos.link }}">Saiba mais</a>
+                        <a href="{{ servicos.0.link }}">Descubra Mais</a>
                     </div>
-                    {% if request.user.is_authenticated and request.user.is_staff %}
-                        <a href="{% url 'backoffice:editar_servico' card_id=1 %}">Editar Card 1</a>
-                    {% endif %}
                 </div>
 
-                <div class="card-2">
+                <!-- Repita o padrão para os outros cartões, garantindo que as variáveis correspondam às do backoffice -->
+
+                <!-- Card 2 -->
+                <div class="card">
                     <div class="image-title">
-                        {% if servicos.card2_imagem %}
-                            <img height="160px" src="{{ servicos.card2_imagem.url }}" alt="{{ servicos.card2_titulo }}">
+                        {% if servicos.0.card2_imagem %}
+                            <img height="160px" src="{{ servicos.0.card2_imagem.url }}"
+                                 alt="{{ servicos.0.card2_titulo }}">
                         {% else %}
-                            <img height="160px" src="{% static 'images/bem-estar.jpg' %}" alt="Imagem padrão">
+                            <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
                         {% endif %}
-                        <h3>{{ servicos.card2_titulo }}</h3>
-                        <p>{{ servicos.card2_descricao }}</p>
+                        <h3>{{ servicos.0.card2_titulo }}</h3>
+                        <p>{{ servicos.0.card2_descricao }}</p>
                     </div>
                     <div class="more-info">
-                        <a href="{{ servicos.card2_link }}">Saiba mais</a>
+                        <a href="{{ servicos.0.card2_link }}">Descubra Mais</a>
                     </div>
-                    {% if request.user.is_authenticated and request.user.is_staff %}
-                        <a href="{% url 'backoffice:editar_servico' card_id=2 %}">Editar Card 2</a>
-                    {% endif %}
                 </div>
 
+                <!-- Card 3 -->
                 <div class="card-3">
                     <div class="image-title">
-                        {% if servicos.card3_imagem %}
-                            <img height="160px" src="{{ servicos.card3_imagem.url }}" alt="{{ servicos.card3_titulo }}">
+                        {% if servicos.0.card3_imagem %}
+                            <img height="160px" src="{{ servicos.0.card3_imagem.url }}"
+                                 alt="{{ servicos.0.card3_titulo }}">
                         {% else %}
-                            <img height="160px" src="{% static 'images/bem-estar.jpg' %}" alt="Imagem padrão">
+                            <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
                         {% endif %}
-                        <h3>{{ servicos.card3_titulo }}</h3>
-                        <p>{{ servicos.card3_descricao }}</p>
+                        <h3>{{ servicos.0.card3_titulo }}</h3>
+                        <p>{{ servicos.0.card3_descricao }}</p>
                     </div>
                     <div class="more-info">
-                        <a href="{{ servicos.card3_link }}">Saiba mais</a>
+                        <a href="{{ servicos.0.card3_link }}">Descubra Mais</a>
                     </div>
-                    {% if request.user.is_authenticated and request.user.is_staff %}
-                        <a href="{% url 'backoffice:editar_servico' card_id=3 %}">Editar Card 3</a>
-                    {% endif %}
                 </div>
 
+                <!-- Card 4 -->
                 <div class="card-4">
                     <div class="image-title">
-                        {% if servicos.card4_imagem %}
-                            <img height="160px" src="{{ servicos.card4_imagem.url }}" alt="{{ servicos.card4_titulo }}">
+                        {% if servicos.0.card4_imagem %}
+                            <img height="160px" src="{{ servicos.0.card4_imagem.url }}"
+                                 alt="{{ servicos.0.card4_titulo }}">
                         {% else %}
-                            <img height="160px" src="{% static 'images/bem-estar.jpg' %}" alt="Imagem padrão">
+                            <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
                         {% endif %}
-                        <h3>{{ servicos.card4_titulo }}</h3>
-                        <p>{{ servicos.card4_descricao }}</p>
+                        <h3>{{ servicos.0.card4_titulo }}</h3>
+                        <p>{{ servicos.0.card4_descricao }}</p>
                     </div>
                     <div class="more-info">
-                        <a href="{{ servicos.card4_link }}">Saiba mais</a>
+                        <a href="{{ servicos.0.card4_link }}">Descubra Mais</a>
                     </div>
-                    {% if request.user.is_authenticated and request.user.is_staff %}
-                        <a href="{% url 'backoffice:editar_servico' card_id=4 %}">Editar Card 4</a>
-                    {% endif %}
                 </div>
             </div>
+        </div>
     </section>
+
 
     <section id="contacto">
         <div class="form">
@@ -245,7 +269,7 @@
             </div>
         </div>
     </section>
-
 {% endblock %}
+
 </body>
 </html>

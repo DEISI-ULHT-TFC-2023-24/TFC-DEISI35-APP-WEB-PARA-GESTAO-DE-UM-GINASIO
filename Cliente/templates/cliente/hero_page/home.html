@@ -19,10 +19,7 @@
                 <a href="#home">Home</a>
                 <a href="">Blog</a>
                 <a href="#contacto">Contactos</a>
-                <div class="link-dropdown">
-                    <a href="">Serviços</a>
-                    <img src="{% static 'images/expand_more_FILL1_wght400_GRAD0_opsz24.png' %}" alt="">
-                </div>
+                <a href="#services">Serviços</a>
                 <div class="button">
                     <button onclick="window.location.href='{% url 'login_view' %}'">Agendamento
                     </button>
@@ -79,66 +76,70 @@
             <!-- Card 1 -->
             <div class="card-1">
                 <div class="image-title">
-                    {% if servicos.0.imagem %}
-                        <img height="160px" src="{{ servicos.0.imagem.url }}" alt="{{ servicos.0.titulo }}">
+                    {% if servico.imagem %}
+                        <img height="160px" src="{{ servico.imagem.url }}" alt="{{ servico.titulo }}">
                     {% else %}
-                        <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
+                        <img height="160px" src="{% static 'images/bem-estar.jpg' %}"
+                             alt="Imagem padrão">
                     {% endif %}
-                    <h3>{{ servicos.0.titulo }}</h3>
-                    <p>{{ servicos.0.descricao }}</p>
+                    <h3>{{ servico.titulo }}</h3>
+                    <p>{{ servico.descricao }}</p>
                 </div>
                 <div class="more-info">
-                    <a href="{{ servicos.0.link }}">Descubra Mais</a>
+                    <a href="{{ servico.link }}">Descubra Mais</a>
                 </div>
             </div>
-
-            <!-- Repita o padrão para os outros cartões, garantindo que as variáveis correspondam às do backoffice -->
 
             <!-- Card 2 -->
+
             <div class="card-2">
                 <div class="image-title">
-                    {% if servicos.0.card2_imagem %}
-                        <img height="160px" src="{{ servicos.0.card2_imagem.url }}" alt="{{ servicos.0.card2_titulo }}">
+                    {% if servico.imagem %}
+                        <img height="160px" src="{{ servico.imagem.url }}" alt="{{ servico.titulo }}">
                     {% else %}
-                        <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
+                        <img height="160px" src="{% static 'images/alimentacao-balanceada.jpg' %}"
+                             alt="Imagem padrão">
                     {% endif %}
-                    <h3>{{ servicos.0.card2_titulo }}</h3>
-                    <p>{{ servicos.0.card2_descricao }}</p>
+                    <h3>{{ servico.titulo }}</h3>
+                    <p>{{ servico.descricao }}</p>
                 </div>
                 <div class="more-info">
-                    <a href="{{ servicos.0.card2_link }}">Descubra Mais</a>
+                    <a href="{{ servico.link }}">Descubra Mais</a>
                 </div>
             </div>
+
 
             <!-- Card 3 -->
             <div class="card-3">
                 <div class="image-title">
-                    {% if servicos.0.card3_imagem %}
-                        <img height="160px" src="{{ servicos.0.card3_imagem.url }}" alt="{{ servicos.0.card3_titulo }}">
+                    {% if servico.imagem %}
+                        <img height="160px" src="{{ servico.imagem.url }}" alt="{{ servico.titulo }}">
                     {% else %}
-                        <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
+                        <img height="160px" src="{% static 'images/zumba-danca.jpg' %}"
+                             alt="Imagem padrão">
                     {% endif %}
-                    <h3>{{ servicos.0.card3_titulo }}</h3>
-                    <p>{{ servicos.0.card3_descricao }}</p>
+                    <h3>{{ servico.titulo }}</h3>
+                    <p>{{ servico.descricao }}</p>
                 </div>
                 <div class="more-info">
-                    <a href="{{ servicos.0.card3_link }}">Descubra Mais</a>
+                    <a href="{{ servico.link }}">Descubra Mais</a>
                 </div>
             </div>
 
             <!-- Card 4 -->
             <div class="card-4">
                 <div class="image-title">
-                    {% if servicos.0.card4_imagem %}
-                        <img height="160px" src="{{ servicos.0.card4_imagem.url }}" alt="{{ servicos.0.card4_titulo }}">
+                    {% if servico.imagem %}
+                        <img height="160px" src="{{ servico.imagem.url }}" alt="{{ servico.titulo }}">
                     {% else %}
-                        <img height="160px" src="{% static 'images/wellness.png' %}" alt="Imagem padrão">
+                        <img height="160px" src="{% static 'images/wellness.png' %}"
+                             alt="Imagem padrão">
                     {% endif %}
-                    <h3>{{ servicos.0.card4_titulo }}</h3>
-                    <p>{{ servicos.0.card4_descricao }}</p>
+                    <h3>{{ servico.titulo }}</h3>
+                    <p>{{ servico.descricao }}</p>
                 </div>
                 <div class="more-info">
-                    <a href="{{ servicos.0.card4_link }}">Descubra Mais</a>
+                    <a href="{{ servico.link }}">Descubra Mais</a>
                 </div>
             </div>
         </div>

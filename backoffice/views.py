@@ -1,13 +1,14 @@
 # backoffice/views.py
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.views.decorators.cache import never_cache
 
 from Cliente.models import CadastroImage, Servico
-from .forms import CadastroImageForm, ServicoForm, ClienteUserForm
+from backoffice.forms import ServicoForm, ClienteUserForm, CadastroImageForm
 
 
 # backoffice/views.py
@@ -91,6 +92,11 @@ def backoffice_login(request):
         form = AuthenticationForm()
     return render(request, 'backoffice/login-backoffice/login.html', {'form': form})
 
+
+@never_cache
+def backoffice_logout(request):
+        logout(request)
+        return redirect('backoffice:login')
 
 def create_cliente_user(request):
     if request.method == 'POST':
