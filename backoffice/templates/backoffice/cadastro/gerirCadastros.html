@@ -1,0 +1,180 @@
+{% extends 'backoffice/baseBackoffice/base.html' %}
+
+{% block extra_css_backoffice %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Cadastros</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        article, aside, figcaption, figure, header, hgroup, nav, section {
+            display: flex !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        !important;
+        }
+
+        .text-center {
+            margin-top: 4em;
+            margin-bottom: 1em;
+        }
+
+        body {
+            font-family: "Prompt", sans-serif;
+            color: #0f0f0f;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content-backoffice %}
+    <body>
+    <div class="container my-4">
+        <h1 class="text-center">Gestão de Cadastros</h1>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <input type="text" id="filter-nome" class="form-control" placeholder="Pesquisar por Nome...">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="filter-email" class="form-control" placeholder="Pesquisar por Email...">
+            </div>
+            <div class="col-sm-4">
+                <button id="clear-filters" class="btn btn-secondary">Limpar Filtros</button>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telemóvel</th>
+                <th>Data de Cadastro</th>
+                <th>Estado</th>
+                <th>Usuário da Ação</th>
+                <th>Data da Ação</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody id="cadastros-list">
+            <!-- Cadastros serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cadastrosList = document.getElementById('cadastros-list');
+
+            // Fetch cadastros
+            fetch('/api/cadastros/')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(cadastro => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${cadastro.nome}</td>
+                            <td>${cadastro.email}</td>
+                            <td>${cadastro.telemovel}</td>
+                            <td>${new Date(cadastro.data_cadastro).toLocaleDateString()}</td>
+                            <td>${cadastro.estado ? 'Tratado' : 'Pendente'}</td>
+                            <td>${cadastro.usuario_acao || 'N/A'}</td>
+                            <td>${cadastro.data_acao ? new Date(cadastro.data_acao).toLocaleString() : 'N/A'}</td>
+                            <td>
+                                <a href="mailto:${cadastro.email}" class="btn btn-primary btn-sm">Enviar Email</a>
+                                <a href="tel:${cadastro.telemovel}" class="btn btn-secondary btn-sm">Ligar</a>
+                                <input type="checkbox" class="validate-action" data-id="${cadastro.id}" ${cadastro.estado ? 'checked' : ''}>
+                            </td>
+                        `;
+                        cadastrosList.appendChild(row);
+                    });
+
+                    // Add event listeners for validation checkboxes
+                    document.querySelectorAll('.validate-action').forEach(checkbox => {
+                        checkbox.addEventListener('change', function () {
+                            const cadastroId = this.getAttribute('data-id');
+                            const isChecked = this.checked;
+                            const usuario = 'usuário_logado'; // Substitua pelo usuário logado
+
+                            fetch(`/api/cadastros/${cadastroId}/atualizar-estado/`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': getCookie('csrftoken')  // Certifique-se de que está obtendo o CSRF token corretamente
+                                },
+                                body: JSON.stringify({
+                                    estado: isChecked,
+                                    usuario_acao: usuario,
+                                    data_acao: new Date().toISOString()
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        // Atualize a data da ação, estado e usuário da ação na tabela
+                                        const row = this.closest('tr');
+                                        row.querySelector('td:nth-child(5)').textContent = isChecked ? 'Tratado' : 'Pendente';
+                                        row.querySelector('td:nth-child(6)').textContent = isChecked ? usuario : 'N/A';
+                                        row.querySelector('td:nth-child(7)').textContent = isChecked ? new Date().toLocaleString() : 'N/A';
+                                    } else {
+                                        alert('Erro ao atualizar o estado');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erro ao atualizar o estado:', error);
+                                });
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar cadastros:', error);
+                });
+
+            // Função para obter o CSRF token (se necessário)
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Função para filtrar os cadastros
+            function filterCadastros() {
+                const filterNome = document.getElementById('filter-nome').value.toLowerCase();
+                const filterEmail = document.getElementById('filter-email').value.toLowerCase();
+                const rows = cadastrosList.getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const nome = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                    const email = rows[i].getElementsByTagName('td')[1].textContent.toLowerCase();
+                    const shouldShow = nome.includes(filterNome) && email.includes(filterEmail);
+                    rows[i].style.display = shouldShow ? '' : 'none';
+                }
+            }
+
+            // Adicionar event listeners para os campos de filtro
+            document.getElementById('filter-nome').addEventListener('input', filterCadastros);
+            document.getElementById('filter-email').addEventListener('input', filterCadastros);
+
+            // Limpar filtros
+            document.getElementById('clear-filters').addEventListener('click', function () {
+                document.getElementById('filter-nome').value = '';
+                document.getElementById('filter-email').value = '';
+                filterCadastros();
+            });
+        });
+    </script>
+    </body>
+{% endblock %}

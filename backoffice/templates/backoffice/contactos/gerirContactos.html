@@ -1,0 +1,184 @@
+{% extends 'backoffice/baseBackoffice/base.html' %}
+
+{% block extra_css_backoffice %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Contactos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .message-cell {
+            max-width: 200px; /* Limita a largura da coluna da mensagem */
+            white-space: normal; /* Permite quebra de linha dentro da mensagem */
+            word-wrap: break-word; /* Quebra a linha dentro das palavras longas */
+        }
+
+        article, aside, figcaption, figure, hgroup, nav, section {
+            display: flex !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        !important;
+        }
+
+        .text-center {
+            margin-top: 4em;
+            margin-bottom: 1em;
+        }
+
+        body {
+            font-family: "Prompt", sans-serif;
+            color: #0f0f0f;
+        }
+
+    </style>
+{% endblock %}
+{% block content-backoffice %}
+<body>
+    <div class="container my-4">
+        <h1 class="text-center">Gestão de Contactos</h1>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <input type="text" id="filter-nome" class="form-control" placeholder="Pesquisar por Nome...">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="filter-email" class="form-control" placeholder="Pesquisar por Email...">
+            </div>
+            <div class="col-sm-4">
+                <button id="clear-filters" class="btn btn-secondary">Limpar Filtros</button>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Mensagem</th>
+                    <th>Data de Contacto</th>
+                    <th>Estado</th>
+                    <th>Usuário da Ação</th>
+                    <th>Data da Ação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="contactos-list">
+                <!-- Contactos serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactosList = document.getElementById('contactos-list');
+
+            // Fetch contactos
+            fetch('/api/contactos/')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(contacto => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${contacto.nome}</td>
+                            <td>${contacto.email}</td>
+                            <td class="message-cell">${contacto.mensagem}</td>
+                            <td>${new Date(contacto.data_contacto).toLocaleDateString()}</td>
+                            <td>${contacto.estado ? 'Tratado' : 'Pendente'}</td>
+                            <td>${contacto.validado_por || 'N/A'}</td>
+                            <td>${contacto.data_acao ? new Date(contacto.data_acao).toLocaleString() : 'N/A'}</td>
+                            <td>
+                                <a href="mailto:${contacto.email}" class="btn btn-primary btn-sm">Enviar Email</a>
+                                <input type="checkbox" class="validate-contact" data-id="${contacto.id}" ${contacto.estado ? 'checked' : ''}>
+                            </td>
+                        `;
+                        contactosList.appendChild(row);
+                    });
+
+                    // Add event listeners for validation checkboxes
+                    document.querySelectorAll('.validate-contact').forEach(checkbox => {
+                        checkbox.addEventListener('change', function() {
+                            const contactId = this.getAttribute('data-id');
+                            const isChecked = this.checked;
+                            const usuario = 'usuário_logado'; // Substitua pelo usuário logado
+
+                            fetch(`/api/contactos/${contactId}/validar/`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': getCookie('csrftoken')  // Certifique-se de que está obtendo o CSRF token corretamente
+                                },
+                                body: JSON.stringify({
+                                    estado: isChecked,
+                                    validado_por: usuario,
+                                    data_acao: new Date().toISOString()
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // Atualize a data da ação, estado e usuário da ação na tabela
+                                    const row = this.closest('tr');
+                                    row.querySelector('td:nth-child(5)').textContent = isChecked ? 'Tratado' : 'Pendente';
+                                    row.querySelector('td:nth-child(6)').textContent = isChecked ? usuario : 'N/A';
+                                    row.querySelector('td:nth-child(7)').textContent = isChecked ? new Date().toLocaleString() : 'N/A';
+                                } else {
+                                    alert('Erro ao validar o contacto');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Erro ao validar o contacto:', error);
+                            });
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar contactos:', error);
+                });
+
+            // Função para obter o CSRF token (se necessário)
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Função para filtrar os contactos
+            function filterContacts() {
+                const filterNome = document.getElementById('filter-nome').value.toLowerCase();
+                const filterEmail = document.getElementById('filter-email').value.toLowerCase();
+                const rows = contactosList.getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const nome = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                    const email = rows[i].getElementsByTagName('td')[1].textContent.toLowerCase();
+                    const shouldShow = nome.includes(filterNome) && email.includes(filterEmail);
+                    rows[i].style.display = shouldShow ? '' : 'none';
+                }
+            }
+
+            // Adicionar event listeners para os campos de filtro
+            document.getElementById('filter-nome').addEventListener('input', filterContacts);
+            document.getElementById('filter-email').addEventListener('input', filterContacts);
+
+            // Limpar filtros
+            document.getElementById('clear-filters').addEventListener('click', function() {
+                document.getElementById('filter-nome').value = '';
+                document.getElementById('filter-email').value = '';
+                filterContacts();
+            });
+        });
+    </script>
+</body>
+{% endblock %}

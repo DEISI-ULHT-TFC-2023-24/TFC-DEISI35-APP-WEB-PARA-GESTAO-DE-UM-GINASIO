@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    font-weight: 400;
+    outline: none;
+    font-family: "Prompt", sans-serif;
+    font-style: normal;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    height: 72px;
+    background-color: #19D1C3;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Mudança de relative para fixed */
+    top: 0; /* Fixar no topo */
+    left: 0; /* Fixar à esquerda */
+    z-index: 1000; /* Alto valor de z-index para estar à frente */
+    padding: 0 20px;
+    opacity: 0.8; /* Ajuste da opacidade para transparência */
+}
+
+nav .services {
+    position: relative;
+    cursor: pointer;
+}
+
+nav .schedual {
+    position: relative;
+    cursor: pointer;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    position: relative;
+    padding: 0 10px;
+    margin-right: 10px; /* Espaçamento entre os links */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    left: 0;
+    background: black;
+    transition: width 0.3s ease, background-color 0.3s ease; /* Transição suave para o sublinhado */
+}
+
+nav a:hover {
+    color: white;
+}
+
+nav a:hover::after {
+    width: 100%;
+    background: white; /* Cor do sublinhado ao passar o cursor */
+}
+
+nav .services-dropdown, nav .submenu {
+    position: absolute;
+    background-color: rgba(25, 209, 195, 0.95); /* Slightly transparent background */
+    width: 250px;
+    height: auto;
+    display: none;
+    list-style: none;
+    font-size: 16px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for visibility and movement */
+    opacity: 0; /* Initially hidden */
+}
+
+nav .services-dropdown {
+    top: 100%; /* Adjust the position to be just below the nav */
+    left: 0;
+    transform: translateX(0); /* Initial position */
+}
+
+nav .submenu {
+    top: 145px;
+    left: 85%; /* Position it to the right initially */
+    border-radius: 8px;
+}
+
+nav .services-dropdown li, nav .submenu li {
+    margin: 10px 0;
+}
+
+nav .services-dropdown a, nav .submenu a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 16px;
+    display: block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav .services-dropdown a:hover, nav .submenu a:hover {
+    background-color: #16b5a9;
+    color: white;
+}
+
+nav .services:hover .services-dropdown, nav .has-submenu:hover .submenu {
+    display: flex;
+    flex-direction: column;
+    opacity: 1; /* Show dropdown */
+    transform: translateX(0); /* Slide in */
+}
+
+nav .services:hover .services-dropdown, nav .services-dropdown:hover {
+    display: flex;
+    opacity: 1; /* Ensure dropdown stays visible */
+    transform: translateX(0); /* Ensure it stays in place */
+}
+
+nav .has-submenu:hover .submenu, nav .submenu:hover {
+    display: flex;
+    opacity: 1; /* Ensure submenu stays visible */
+    transform: translateX(0); /* Slide in */
+}
+
+
+nav .right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 80px;
+}
+
+.logo-ptclinic {
+    position: relative;
+    margin-left: 45px;
+    margin-top: 120px;
+    transition: opacity 0.3s ease; /* Transição suave */
+}
+
+button{
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #19D1C3;
+    color: black;
+    border-color: #19D1C3;
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+footer {
+    position: relative;
+}
+
+.footer-apoio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #B8B9B9;
+    width: 100%;
+    padding: 50px;
+    gap: 1em;
+}
+
+.footer-apoio h2 {
+    font-size: 50px;
+    color: #53565A;
+}
+
+.footer-apoio h4 {
+    font-size: calc(1.275rem + .3vw);
+    color: #53565A;
+}
+
+.footer-apoio p {
+    font-size: 25px;
+    font-weight: 380;
+    width: 34%;
+    color: #53565A;
+}
+
+.footer-apoio .logo-1 {
+    display: flex;
+    gap: 3em;
+    align-items: center;
+    flex-wrap: wrap; /* Adicionado para tornar responsivo */
+}
+
+.footer-apoio .logo-2 {
+    display: flex;
+    gap: 3em;
+    align-items: center;
+    flex-wrap: wrap; /* Adicionado para tornar responsivo */
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    position: relative;
+    background-color: #53565A;
+    width: 100%;
+    color: white;
+    gap: 2rem;
+    padding: 20px; /* Adicionado para garantir espaçamento em telas menores */
+}
+
+.footer-info .white-color {
+    margin-top: 0;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.reserved-policy {
+    margin-bottom: 2rem;
+    color: #859798;
+}
+
+.reserved-policy .policy {
+    color: #19D1C3;
+}
+
+.icon-social {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Adicionado para tornar responsivo */
+}
+
+.icon-social img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-social img:hover {
+    transform: scale(1.1); /* Aumenta o tamanho do ícone em 10% */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
+}
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+    nav .logo-ptclinic {
+        margin: 10px 0;
+    }
+    nav .logo-ptclinic img {
+        width: 80px;
+        height: auto;
+    }
+    nav .right {
+        flex-direction: column;
+        gap: 1em;
+        margin-right: 0;
+    }
+    nav .services-dropdown, nav .schedual-dropdown {
+        width: 100%;
+    }
+    .footer-apoio p {
+        width: 90%;
+    }
+    .footer-apoio .logo-1 img, .footer-apoio .logo-2 img {
+        width: 80px;
+    }
+    .footer-info img {
+        width: 80%;
+    }
+    .icon-social img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        padding: 5px;
+    }
+    nav .right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+    nav .logo-ptclinic img {
+        width: 60px;
+    }
+    .footer-apoio h2 {
+        font-size: 36px;
+    }
+    .footer-apoio h4 {
+        font-size: calc(1rem + .3vw);
+    }
+    .footer-apoio p {
+        font-size: 18px;
+        width: 80%;
+    }
+    .footer-info .white-color {
+        font-size: 16px;
+    }
+    .reserved-policy {
+        font-size: 14px;
+    }
+    .icon-social img {
+        width: 30px;
+        height: 30px;
+    }
+}

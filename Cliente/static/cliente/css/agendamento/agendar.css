@@ -1,0 +1,63 @@
+body {
+    font-family: "Prompt", sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 2em;
+}
+
+#calendar {
+    max-width: 100%;
+    margin: 1.5em auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#appointment-form {
+    max-width: 100%;
+    margin: 1.5em auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.custom-btn {
+    font-family: "Prompt", sans-serif;
+    background-color: #f8f9fa;
+    border: none;
+    padding: 10px 20px;
+    color: #333;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.custom-btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.custom-btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Sobrescreve a regra display: block do Bootstrap */
+article, aside, figcaption, figure, header, hgroup, main, nav, section {
+    display: flex !important;
+
+}
+
+a:hover {
+    text-decoration: none; !important;
+}

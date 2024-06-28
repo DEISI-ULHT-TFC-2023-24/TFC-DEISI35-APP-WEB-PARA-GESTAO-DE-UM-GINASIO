@@ -1,0 +1,319 @@
+{% extends 'cliente/base/base.html' %}
+
+{% load static %}
+
+{% block extra_css_cliente %}
+    <link rel="stylesheet" href="{% static 'cliente/css/ladingPage/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content-cliente %}
+
+    <section id="banner">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+
+            <!--   Bullets do carrossel, se aumentar uma imagem, aumente um li e acrescente o próximo número -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+                <li data-target="#carousel" data-slide-to="3"></li>
+            </ol>
+
+            <div class="carousel-inner">
+                <div class="carousel-item carousel-item-1 active">
+                    <img alt="imagem 1" src="{% static 'cliente/images/banner/banner.jpg' %}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <button class="btn btn-primary saber-mais-btn">Saber Mais</button>
+                    </div>
+                </div>
+
+                <div class="carousel-item carousel-item-2">
+                    <img alt="imagem 2" src="{% static 'cliente/images/banner/Banner2.jpeg' %}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <button class="btn btn-primary saber-mais-btn">Saber Mais</button>
+                    </div>
+                </div>
+
+                <div class="carousel-item carousel-item-3">
+                    <img alt="imagem 3" src="{% static 'cliente/images/banner/Banner3.jpeg' %}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <button class="btn btn-primary saber-mais-btn">Saber Mais</button>
+                    </div>
+                </div>
+
+                <div class="carousel-item carousel-item-4">
+                    <img alt="imagem 4" src="{% static 'cliente/images/banner/Banner4.jpeg' %}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <button class="btn btn-primary saber-mais-btn">Saber Mais</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--   Controladores | Botões -->
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Previous </span>
+            </a>
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Next </span>
+            </a>
+        </div>
+        <!-- Fim do carrossel -->
+    </section>
+
+    <section id="cadastro">
+        <div class="cadastro-content">
+            <div class="text-content">
+                <h1>Transforme sua Vida com Saúde e Vitalidade</h1>
+                <h4>Na PT Clinic, combinamos treinamento de ponta com um ambiente acolhedor para ajudá-lo a atingir seus
+                    objetivos de saúde e fitness. Venha fazer parte da nossa comunidade!</h4>
+                <form method="post" action="{% url 'cadastro' %}" onsubmit="return showPopup()">
+                    {% csrf_token %}
+                    <div class="input-email">
+                        <div class="cadastrar-input">
+                            <div class="name-sign">
+                                <span>Nome</span>
+                                <label>
+                                    <input type="text" name="nome" placeholder="Insira o seu nome" required>
+                                </label>
+                            </div>
+                            <div class="email-sign">
+                                <span>Email</span>
+                                <label>
+                                    <input type="email" name="email" placeholder="Insira o seu email" required>
+                                </label>
+                            </div>
+                            <div class="phone-sign">
+                                <span>Telemóvel</span>
+                                <label>
+                                    <input type="tel" name="telemovel" placeholder="Insira o seu contacto telefónico"
+                                           required>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cadastrar-button">
+                            <button type="submit">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="text">
+                    Ao clicar em Cadastrar você confirma que concorda com nossos Termos e Condições.
+                </div>
+            </div>
+            <div class="image">
+                <img width="600px"  src="{% static 'cliente/images/cadastrar/cadastrar-2.jpeg' %}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pop-up de confirmação -->
+    {% if success %}
+        <!-- Pop-up de confirmação -->
+        <div id="popup"
+             style="display:block; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.5);">
+            Cadastro realizado com sucesso!
+        </div>
+        <script>
+            setTimeout(function () {
+                document.getElementById('popup').style.display = 'none';
+            }, 2000);
+        </script>
+    {% endif %}
+
+    <section id="map-class">
+        <div class="map-links">
+            <span class="map-title">Mapa de Aulas</span>
+            <div class="map-content">
+                <img width="100%" src="{% static 'cliente/images/mapaAulas/mapa-aulas.png' %}" alt="Mapa de Aulas">
+            </div>
+            <span class="save-map">Guardar Mapa</span>
+            <div class="link-icons">
+                <a href="{% static 'cliente/css/docPDF/mapa-ficheiro.pdf' %}" download>
+                    <img width="50px" src="{% static 'cliente/images/iconMap/PTC - ICON Download Mapa.svg' %}"
+                         alt="Download">
+                </a>
+                <a href="https://local.google.com/place?id=15347365210580877001&use=posts&lpsid=CIHM0ogKEICAgICDpcmnoAE&g_st=ic">
+                    <img width="50px" src="{% static 'cliente/images/iconMap/PTC - ICON Google Search.svg' %}"
+                         alt="Google Search">
+                </a>
+                <a href="https://www.facebook.com/share/p/xi6y4p5XiyeWM35U/?mibextid=WC7FNe">
+                    <img width="50px" src="{% static 'cliente/images/iconMap/PTC - ICON Facebook.svg' %}"
+                         alt="Facebook">
+                </a>
+                <a href="https://www.instagram.com/p/C5JITK7Mmkg/?igsh=Y3BubmJtbmszcHVu">
+                    <img width="50px" src="{% static 'cliente/images/iconMap/PTC - ICON Instagram.svg' %}"
+                         alt="Instagram">
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="mission">
+        <div class="mission-content">
+            <p>Missão</p>
+            <h4>Promovemos o bem-estar e a saúde através da prática de actividade física orientada.</h4>
+            <h4>Disponibilizamos os serviços de reabilitação física, Pilates Clínico, Fisioterapia, Osteopatia,
+                Massagens,
+                Nutrição e Treino Personalizado, que permitem aos utentes atingirem os seus objetivos de forma segura e
+                positiva.</h4>
+            <h4>O corpo docente é constituído por profissionais altamente qualificados na área do exercício e saúde,
+                desde a
+                educação física a especialidades clínicas.</h4>
+            <h4>Fundado em Setembro de 1996, com uma área de 2000m2, o Ginásio da PT Clinic tem salas de exercício
+                totalmente equipadas para desenvolver todas as atividades, Cardio-fitness, Musculação. Estúdios para
+                actividades de grupo (Pilates matwork, Yoga, Alongamentos, Step, Localizada. Pump, Zumba, Spinning,
+                manutenção entre outras), e ainda três courts para Padel e um de Ténis.</h4>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="services-content">
+            <h1>Serviços</h1>
+            <div class="iconsBlue-1">
+                <div class="img-1">
+                    <img src="{% static 'cliente/images/iconsAzul/PTC SALA EXERCICIO.svg' %}" alt="">
+                    <span>Sala Exercicio</span>
+                </div>
+                <div class="img-2">
+                    <img src="{% static 'cliente/images/iconsAzul/PTC AULAS GRUPO.svg' %}" alt="">
+                    <span>Aula Grupo</span>
+                </div>
+                <div class="img-3">
+                    <img src="{% static 'cliente/images/iconsAzul/TREINO PERS.svg' %}" alt="">
+                    <span>Treino Personalizado</span>
+                </div>
+                <div class="img-4">
+                    <img src="{% static 'cliente/images/iconsAzul/aluguer.svg' %}" alt="">
+                    <span>Aluguer Instalações</span>
+                </div>
+            </div>
+            <div class="iconsBlue-2">
+                <div class="img-1">
+                    <img src="{% static 'cliente/images/iconsAzul/FISIOTERAPIA.svg' %}" alt="">
+                    <span>Fisioterapia</span>
+                </div>
+                <div class="img-2">
+                    <img src="{% static 'cliente/images/iconsAzul/PTC MASSAGENS.svg' %}" alt="">
+                    <span>Massagens</span>
+                </div>
+                <div class="img-3">
+                    <img src="{% static 'cliente/images/iconsAzul/PTC NUTRICAO.svg' %}" alt="">
+                    <span>Nutrição</span>
+                </div>
+                <div class="img-4">
+                    <img src="{% static 'cliente/images/iconsAzul/PTC SAUNA.svg' %}" alt="">
+                    <span>Sauna</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="whatsapp-float-contact">
+        <!-- Ícone flutuante do WhatsApp -->
+        <a href="https://wa.me/351932180800" class="whatsapp-float" target="_blank">
+            <img src="{% static 'cliente/images/iconFloat/Whatsapp_icon-icons.com_66931.png' %}" alt="WhatsApp"
+                 class="whatsapp-icon">
+        </a>
+    </section>
+
+    <section id="contacto">
+        <div class="form">
+            <h1>Entre em contacto connosco</h1>
+            <p>Preencha este formulário com suas informações para um breve contacto.</p>
+            <div class="form-content">
+                <form action="{% url 'contacto' %}" method="post" class="form-1">
+                    {% csrf_token %}
+                    <div class="input-nome">
+                        <span class="name"> Nome</span>
+                        <div>
+                            <label>
+                                <input type="text" name="nome" placeholder="João" class="input-nome-2" required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-email">
+                        <span class="email">Email</span>
+                        <div>
+                            <label>
+                                <input type="email" name="email" placeholder="exemplo@hotmail.com" class="input-email-2"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input-mensagem">
+                        <span class="message">Mensagem</span>
+                        <div>
+                            <label>
+                                <textarea name="mensagem" class="input-mensagem-2" required
+                                          placeholder="Escreve a sua mensagem..."></textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkbox">
+                        <div>
+                            <input type="checkbox" name="termos" id="termos" class="checkbox-1" required>
+                        </div>
+                        <div>
+                            <label for="termos" class="label">
+                                <span class="aceito-os-termos">Aceito os </span><span class="termos">Termos</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="button-sub">
+                        <span class="button-32">Submeter</span>
+                    </button>
+                </form>
+                <div class="content-3">
+                    <div class="contact-info1">
+                        <div class="email-contact">
+                            <img width="30px"
+                                 src="{% static 'cliente/images/iconsContacto/mail_FILL1_wght400_GRAD0_opsz24.png' %}"
+                                 alt="">
+                            <a href="mailto:geral@ptclinic.pt" class="link-email">geral@ptclinic.pt</a>
+                            <span>Envie-nos suas dúvidas, comentários ou sugestões.</span>
+                        </div>
+                        <div class="phone-contact">
+                            <img width="30px"
+                                 src="{% static 'cliente/images/iconsContacto/call_FILL1_wght400_GRAD0_opsz24.png' %}"
+                                 alt="">
+                            <a href="tel:+351211555983">+351 211 555 983</a>
+                            <span>Fale conosco para mais informações ou agendamentos.</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-info2">
+                        <div class="office-contact">
+                            <img width="30px"
+                                 src="{% static 'cliente/images/iconsContacto/location_on_FILL1_wght400_GRAD0_opsz24.png' %}"
+                                 alt="">
+                            <span>Centro Comercial Colina do Sol</span>
+                            <span class="text-43">Praceta Manuela Porto 1 Loja 27, 2650-191 Alfornelos</span>
+                        </div>
+
+                        <div class="whatsapp-contact">
+                            <img width="30px"
+                                 src="{% static 'cliente/images/iconsContacto/Whatsapp_icon-icons.com_66931.png' %}"
+                                 alt="">
+                            <a href="https://wa.me/351934499614"><span>+351 932 180 800</span></a>
+                            <span>Fale connosco atráves do WhatsApp.</span>
+                        </div>
+                    </div>
+                    <div class="link-visit">
+                        <a href="{% url 'agendar' %}">Visite nossa recepção para um atendimento personalizado. <i
+                                class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js_cliente %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'cliente/javaScript/base/base.js' %}"></script>
+    <script src="{% static 'cliente/javaScript/landigPage/landingPage.js' %}"></script>
+{% endblock %}

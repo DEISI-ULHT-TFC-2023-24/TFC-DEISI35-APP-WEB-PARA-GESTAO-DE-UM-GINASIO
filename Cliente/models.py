@@ -4,54 +4,37 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 
+
 # Create your models here.
-from django.contrib.auth.models import User
-
-
-class CampanhaPromocional(models.Model):
-    titulo = models.CharField(max_length=200)
-    descricao = models.TextField()
-    imagem = models.ImageField(upload_to='campanhas')
-    data_validade = models.DateField()
-
-
-class BlogPost(models.Model):
-    titulo = models.CharField(max_length=200)
-    conteudo = models.TextField()
-    imagem = models.ImageField(upload_to='posts')
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
-    data_publicacao = models.DateTimeField(auto_now_add=True)
-
-
-class EventoDestaque(models.Model):
-    titulo = models.CharField(max_length=200)
-    descricao = models.TextField()
-    imagem = models.ImageField(upload_to='eventos')
-    data_evento = models.DateTimeField()
-    link = models.URLField()
-
-
+# Continua armazenando informações sobre os clientes do ginásio.
 class Cliente(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    nome = models.CharField(max_length=255)
-    nif = models.CharField(max_length=9, unique=True)
-    data_nascimento = models.DateField()
+    nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    contacto = models.CharField(max_length=15)
-    endereco = models.TextField()
-    genero = models.CharField(max_length=1, choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro')])
-    data_inicio = models.DateField()
-    plano = models.CharField(max_length=100)
-    status = models.CharField(max_length=10,
-                              choices=[('Ativo', 'Ativo'), ('Inativo', 'Inativo'), ('Cancelado', 'Cancelado')])
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-        self.method = None
-        self.POST = None
+    telefone = models.CharField(max_length=15)
+    endereco = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.nome
+
+
+# Um novo modelo para definir diferentes serviços que podem ser agendados, como avaliações físicas, nutrição, etc.
+class Servico(models.Model):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.nome
+
+
+# Relaciona um cliente a um serviço em uma data e hora específicas.
+class Agendamento(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name="agendamento")
+    servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
+    data_hora = models.DateTimeField()
+    observacoes = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.servico.nome} em {self.data_hora.strftime('%Y-%m-%d %H:%M')} - {self.cliente.nome}"
 
     def enviar_email(request):
         if request.method == 'POST':
@@ -65,7 +48,7 @@ class Cliente(models.Model):
                     'Assunto do Email',
                     f'Mensagem de {nome} ({email}): {mensagem}',
                     'email_do_remetente@seusite.com',  # O e-mail que você está enviando.
-                    ['wisley.costa99@hotmail.com'],  # Para quem você está enviando.
+                    ['destinatario@example.com'],  # Para quem você está enviando.
                     fail_silently=False,
                 )
                 return HttpResponse("Email enviado com sucesso!")
@@ -76,47 +59,9 @@ class Cliente(models.Model):
             return redirect(reverse('nome_da_url_para_o_formulário'))
 
 
-# Testes a serem feito
-# 1º Criação da Tabela "Aula"
-
-class Aula(models.Model):
-    nome = models.CharField(max_length=100)
-    instrutor = models.CharField(max_length=100)
-    horario = models.DateTimeField()
-
-    def __str__(self):
-        return self.nome
-
-
-# Recomeçamos o nosso site
 class CadastroImage(models.Model):
     image = models.ImageField(upload_to='cadastro_images')
 
     def __str__(self):
         return "Imagem de Cadastro"
 
-
-# Cliente/models.py
-
-class Servico(models.Model):
-    titulo = models.CharField(max_length=200, null=True, blank=True)
-    descricao = models.TextField(null=True, blank=True)
-    imagem = models.ImageField(upload_to='services_images/', null=True, blank=True)
-    link = models.URLField(blank=True, null=True)  # Este campo já é opcional.
-
-    card2_titulo = models.CharField(max_length=200, null=True, blank=True)
-    card2_descricao = models.TextField(null=True, blank=True)
-    card2_imagem = models.ImageField(upload_to='services_images/', null=True, blank=True)
-    card2_link = models.URLField(blank=True, null=True)  # Este campo já é opcional.
-
-    card3_titulo = models.CharField(max_length=200, null=True, blank=True)
-    card3_descricao = models.TextField(null=True, blank=True)
-    card3_imagem = models.ImageField(upload_to='services_images/', null=True, blank=True)
-    card3_link = models.URLField(blank=True, null=True)  # Este campo já é opcional.
-
-    card4_titulo = models.CharField(max_length=200, null=True, blank=True)
-    card4_descricao = models.TextField(null=True, blank=True)
-    card4_imagem = models.ImageField(upload_to='services_images/', null=True, blank=True)
-    card4_link = models.URLField(blank=True, null=True)  # Este campo já é opcional.
-    def __str__(self):
-        return self.titulo or "Serviço sem título"

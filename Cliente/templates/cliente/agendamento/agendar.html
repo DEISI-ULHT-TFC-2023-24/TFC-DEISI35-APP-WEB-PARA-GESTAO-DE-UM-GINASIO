@@ -1,0 +1,115 @@
+{% extends 'cliente/base/base.html' %}
+
+{% load static %}
+
+{% block extra_css_cliente %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Agendamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet'/>
+    <link rel="stylesheet" href="{% static 'cliente/css/agendamento/agendar.css' %}">
+{% endblock %}
+
+{% block content-cliente %}
+    <div class="container my-4">
+        <h1 class="text-center">Calendário de Agendamento</h1>
+        <div class="row">
+            <!-- Calendário Visual -->
+            <div class="col-md-6">
+                <div id="calendar"></div>
+            </div>
+            <!-- Formulário -->
+            <div class="col-md-6">
+                <form id="appointment-form" class="mt-4">
+                    {% csrf_token %}
+                    <!-- Outros campos do formulário -->
+                    <div class="form-group">
+                        <label for="appointment-type">Tipo de Agendamento</label>
+                        <select id="appointment-type" class="form-control" required>
+                            <option value="">Selecione</option>
+                            <option value="Avaliação Física">Avaliação Física</option>
+                            <option value="Consulta">Consulta</option>
+                            <option value="Visita">Visita</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-date">Data</label>
+                        <input type="text" id="appointment-date" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-time">Hora</label>
+                        <input type="time" id="appointment-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-name">Nome</label>
+                        <input type="text" id="appointment-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-email">Email</label>
+                        <input type="email" id="appointment-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-contact">Contato</label>
+                        <input type="tel" id="appointment-contact" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-note">Nota</label>
+                        <textarea id="appointment-note" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="button" id="cancel-button" class="btn btn-danger">Cancelar</button>
+                    <button type="button" id="schedule-button" class="btn btn-primary">Agendar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para confirmação de cancelamento -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Confirmar Cancelamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja cancelar?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="button" id="confirm-cancel" class="btn btn-danger">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para confirmação de agendamento -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Agendamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="summary-content"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="confirm-schedule" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+    <script src="{% static 'cliente/javaScript/agendamento/agendar.js' %}"></script>
+
+{% endblock %}

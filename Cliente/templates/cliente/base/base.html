@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PT Clinic</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cliente/css/base/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'cliente/images/iconPTCLINIC/icon-PtClinic.jpg' %}">
+
+    {% block extra_css_cliente %}
+
+    {% endblock %}
+
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo-ptclinic">
+            <a href=""><img width="185px" height="185px" src="{% static 'cliente/images/iconPTCLINIC/PT x.jpg' %}"
+                            alt=""></a>
+        </div>
+
+        <div class="right">
+            <a href="/" data-section="home">Home</a>
+            <a href="/" data-section="map-class">Mapa de Aulas</a>
+            <a href="/" data-section="services">Serviços</a>
+            <a href="/" data-section="contacto">Contactos</a>
+
+            <button class="button" onclick="window.location.href='{% url 'agendar' %}'">Agendar</button>
+            <button class="button" onclick="window.location.href='{% url 'backoffice:login' %}'">Área Administrativa
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+    {% block content-cliente %}
+
+    {% endblock %}
+</main>
+
+{% block extra_js_cliente %}
+
+{% endblock %}
+
+<footer>
+    <div class="footer-apoio">
+        <h2>Acordos</h2>
+        <p>Temos acordos com todas a companhias
+            de seguros e sistemas de saúde</p>
+
+        <div class="logo-1">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-MinisterioSaude@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-AdvanceCare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-ACP@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-FutureHealthCare@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Allianz@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SaudePrime@4x.png' %}" alt="">
+        </div>
+        <div class="logo-2">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Medis@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Medicare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Multicare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-JoaquimChavesSaude@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SynLab@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SAMS@4x.png' %}" alt="">
+        </div>
+        <div class="line"></div>
+        <h4>Empresa protegida contra dívidas pela</h4>
+        <img width="150px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Intrum@4x.png' %}" alt="">
+
+    </div>
+
+    <div class="footer-info">
+        <img width="20%" src="{% static 'cliente/images/logosfooter/logo-assinatura.png' %}" alt="">
+        <p class="white-color">
+            Centro Comercial Colina do Sol - Loja 27
+            <br>
+            Praceta Manuela Porto, Nº1 - 2650-191 Encosta do Sol
+        </p>
+        <p class="white-color">211 555 983 | 932 180 800 | geral@ptclinic.pt
+        <p>siga-nos</p>
+        <div class="icon-social">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/google.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/gps.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/facebook.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/instagram.png' %}" alt="">
+        </div>
+        <div class="reserved-policy">
+            PT Clinic ©2023 | Todos os direitos reservados |
+            <span><a class="policy" href="">Política de Privacidade</a></span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

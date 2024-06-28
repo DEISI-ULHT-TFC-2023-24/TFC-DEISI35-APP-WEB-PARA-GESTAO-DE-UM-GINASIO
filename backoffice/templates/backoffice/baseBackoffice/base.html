@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PT Clinic</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'backoffice/css/base/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{% static 'cliente/images/iconPTCLINIC/icon-PtClinic.jpg' %}">
+
+    {% block extra_css_backoffice %}
+
+    {% endblock %}
+
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo-ptclinic">
+            <a href=""><img width="185px" height="185px" src="{% static 'cliente/images/iconPTCLINIC/PT x.jpg' %}"
+                            alt=""></a>
+        </div>
+
+        <div class="right">
+            <a href="{% url 'backoffice:landingPage' %}">Home</a>
+            <a href="/#cadastro">Editar Cadastro</a>
+            <a href="/#map-class">Editar Mapa de Aulas</a>
+
+            <div class="services">
+                Administrativa <i class="fa-solid fa-chevron-down"></i>
+                <ul class="services-dropdown">
+                    <li><a href="{% url 'backoffice:Gerir_Acessos' %}">Gerir Acessos</a></li>
+                    <li><a href="{% url 'backoffice:gerenciamento_contactos' %}">Gerir Contactos</a></li>
+                    <li><a href="{% url 'backoffice:gerenciamento_cadastros' %}">Gerir Cadastros</a></li>
+                    <li class="has-submenu">
+                        <a href="#">Gerir Publicações e Anúncios</a>
+                        <ul class="submenu">
+                            <li><a href="https://pt-pt.facebook.com/login.php/">Facebook</a></li>
+                            <li><a href="https://www.instagram.com/accounts/login/">Instagram</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <button class="button" onclick="window.location.href='{% url 'backoffice:gerir-agendamentos' %}'">Gerir
+                Agenda
+            </button>
+            <button class="button" onclick="window.location.href='{% url 'backoffice:login' %}'">Sair</button>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+    {% block content-backoffice %}
+
+    {% endblock %}
+</main>
+
+<footer>
+    <div class="footer-apoio">
+        <h2>Acordos</h2>
+        <p>Temos acordos com todas a companhias
+            de seguros e sistemas de saúde</p>
+
+        <div class="logo-1">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-MinisterioSaude@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-AdvanceCare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-ACP@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-FutureHealthCare@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Allianz@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SaudePrime@4x.png' %}" alt="">
+        </div>
+        <div class="logo-2">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Medis@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Medicare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Multicare@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-JoaquimChavesSaude@4x.png' %}"
+                 alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SynLab@4x.png' %}" alt="">
+            <img width="100px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-SAMS@4x.png' %}" alt="">
+        </div>
+        <div class="line"></div>
+        <h4>Empresa protegida contra dívidas pela</h4>
+        <img width="150px" src="{% static 'cliente/images/logosfooter/LOGO-FOOTER-Intrum@4x.png' %}" alt="">
+
+    </div>
+
+    <div class="footer-info">
+        <img width="20%" src="{% static 'cliente/images/logosfooter/logo-assinatura.png' %}" alt="">
+        <p class="white-color">
+            Centro Comercial Colina do Sol - Loja 27
+            <br>
+            Praceta Manuela Porto, Nº1 - 2650-191 Encosta do Sol
+        </p>
+        <p class="white-color">211 555 983 | 932 180 800 | geral@ptclinic.pt
+        <p>siga-nos</p>
+        <div class="icon-social">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/google.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/gps.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/facebook.png' %}" alt="">
+            <img width="50px" height="50px" src="{% static 'cliente/images/iconsRedesSocial/instagram.png' %}" alt="">
+        </div>
+        <div class="reserved-policy">
+            PT Clinic ©2023 | Todos os direitos reservados |
+            <span><a class="policy" href="">Política de Privacidade</a></span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

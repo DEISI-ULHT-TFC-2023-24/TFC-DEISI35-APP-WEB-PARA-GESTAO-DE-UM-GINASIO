@@ -1,0 +1,146 @@
+{% extends 'backoffice/baseBackoffice/base.html' %}
+
+{% load static %}
+
+{% block extra_css_backoffice %}
+    <link rel="stylesheet" href="{% static 'backoffice/css/landingPage/backofficePage.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+
+    <!-- Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src={% static 'backoffice/javaScript/baseBackoffice/base.js' %}></script>
+{% endblock %}
+
+{% block content-backoffice %}
+    <section id="banner">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+
+            <!--   Bullets do carrossel, se aumentar uma imagem, aumente um li e acrescente o próximo número -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+                <li data-target="#carousel" data-slide-to="3"></li>
+            </ol>
+
+            <div class="carousel-inner">
+                <div class="carousel-item carousel-item-1 active">
+                    <img alt="imagem 1" src="{% static 'backoffice/images/banners/banner.jpg' %}">
+                </div>
+
+                <div class="carousel-item carousel-item-2">
+                    <img alt="imagem 2" src="{% static 'backoffice/images/banners/Banner2.jpeg' %}">
+                </div>
+
+                <div class="carousel-item carousel-item-3">
+                    <img alt="imagem 3" src="{% static 'backoffice/images/banners/Banner3.jpeg' %}">
+                </div>
+
+                <div class="carousel-item carousel-item-4">
+                    <img alt="imagem 4" src="{% static 'backoffice/images/banners/Banner4.jpeg' %}">
+                </div>
+            </div>
+
+            <!--   Controladores | Botões -->
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Previous </span>
+            </a>
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"> Next </span>
+            </a>
+        </div>
+        <!-- Fim do carrossel -->
+    </section>
+
+    <section id="cadastro">
+        <div class="cadastro-content">
+            <div class="text-content">
+                <h1>Transforme sua Vida com Saúde e Vitalidade</h1>
+                <h4>Na PT Clinic, combinamos treinamento de ponta com um ambiente acolhedor para ajudá-lo a atingir seus
+                    objetivos de saúde e fitness. Venha fazer parte da nossa comunidade!</h4>
+                <div class="input-email">
+                    <div class="cadastrar-input">
+                        <div class="name-sign">
+                            <span>Nome</span>
+                            <label>
+                                <input type="text" name="nome" placeholder="Insira o seu nome">
+                            </label>
+                        </div>
+                        <div class="email-sign">
+                            <span>Email</span>
+                            <label>
+                                <input type="text" name="email" placeholder="Insira o seu email">
+                            </label>
+                        </div>
+                        <div class="phone-sign">
+                            <span>Telemóvel</span>
+                            <label>
+                                <input type="tel" name="telemovel" placeholder="Insira o seu contacto telefónico">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="cadastrar-button">
+                        <button>Cadastrar</button>
+                    </div>
+                </div>
+
+                <div class="text">
+                    Ao clicar em Cadastrar você confirma que concorda com nossos Termos e Condições.
+                </div>
+            </div>
+            <!-- Algum lugar no seu template no app Cliente -->
+            <div class="image">
+                <div>
+                    <button type="button" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#editModal">
+                        <i class="bi bi-pencil"></i> Editar
+                    </button>
+                </div>
+                <img width="600px" src="{% static 'cliente/images/cadastrar/cadastrar-2.jpeg' %}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section id="map-class">
+        <div class="map-links">
+            <div class="text-button">
+                <span class="map-title">Mapa de Aulas</span>
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                        <i class="bi bi-pencil"></i> Editar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botão de lápis -->
+
+            <div class="map-content">
+                <img width="100%" src="{% static 'cliente/images/mapaAulas/mapa-aulas.png' %}" alt="">
+            </div>
+            <span class="save-map">Guardar Mapa</span>
+            <div class="link-icons">
+                <a href="{% static 'cliente/css/docPDF/mapa-ficheiro.pdf' %}" dowload><img width="50px"
+                                                                                           src="{% static 'cliente/images/iconMap/PTC - ICON Download Mapa.svg' %}"
+                                                                                           alt=""></a>
+                <a href="https://local.google.com/place?id=15347365210580877001&use=posts&lpsid=CIHM0ogKEICAgICDpcmnoAE&g_st=ic"><img
+                        width="50px" src="{% static 'cliente/images/iconMap/PTC - ICON Google Search.svg' %}"
+                        alt=""></a>
+                <a href="https://www.facebook.com/share/p/xi6y4p5XiyeWM35U/?mibextid=WC7FNe"><img width="50px"
+                                                                                                  src="{% static 'cliente/images/iconMap/PTC - ICON Facebook.svg' %}"
+                                                                                                  alt=""></a>
+                <a href="https://www.instagram.com/p/C5JITK7Mmkg/?igsh=Y3BubmJtbmszcHVu"><img width="50px"
+                                                                                              src="{% static 'cliente/images/iconMap/PTC - ICON Instagram.svg' %}"
+                                                                                              alt=""></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js_backoffice %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'backoffice/javaScript/baseBackoffice/base.js' %}"></script>
+    <script src="{% static 'backoffice/javaScript/landingPageBackoffice/landingPage.js' %}"></script>
+{% endblock %}

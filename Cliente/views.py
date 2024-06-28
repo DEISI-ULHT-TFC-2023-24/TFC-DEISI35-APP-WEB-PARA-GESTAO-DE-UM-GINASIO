@@ -1,54 +1,57 @@
-from django.contrib.auth import authenticate, logout
-from django.shortcuts import render, redirect
-from django.views.decorators.cache import never_cache
+from django.conf import settings
+from django.core.mail import send_mail
+from django.shortcuts import render
 
-from .models import CampanhaPromocional, BlogPost, EventoDestaque, CadastroImage, Servico
-from django.contrib.auth import login
-
-
-def cliente(request):
-    campanhas = CampanhaPromocional.objects.all()
-    posts = BlogPost.objects.all()
-    eventos = EventoDestaque.objects.all()
-    return render(request, 'cliente/area_cliente/area-cliente.html', {
-        'campanhas': campanhas,
-        'posts': posts,
-        'eventos': eventos
-    })
+from cliente.forms import CadastroForm, ContactoForm
+from cliente.models import CadastroImage, Servico
 
 
-# Comecei a nova implementação 07/04/2024 19:00
-def home(request):
+# Create your views here.
+
+def LadingPage(request):
     cadastro_image = CadastroImage.objects.first()  # Apenas uma imagem de cadastro
     servicos = Servico.objects.all()  # Obtém todos os objetos Servico
     context = {
         'cadastro_image': cadastro_image,
         'servicos': servicos,
     }
-    return render(request, 'cliente/hero_page/home.html', context)
+    return render(request, 'cliente/ladingPage/index.html')
+
+def Agendamento(resquest):
+    return render(resquest, 'cliente/agendamento/agendar.html')
 
 
-# Limite
-
-
-def login_view(request):
+def cadastro_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_active:  # Verifica se o usuário está ativo
-                login(request, user)
-                # Redireciona para a área do cliente
-                return redirect('cliente:area_cliente')
-            else:
-                return render(request, 'cliente/login/login.html', {'error_message': 'Sua conta está desativada.'})
-        else:
-            return render(request, 'cliente/login/login.html', {'error_message': 'Login inválido'})
+        form = CadastroForm(request.POST)
+        if form.is_valid():
+            cadastro = form.save()
+            send_mail(
+                'Novo Cadastro Recebido',
+                f'Nome: {cadastro.nome}\nEmail: {cadastro.email}\nTelemóvel: {cadastro.telemovel}',
+                settings.EMAIL_HOST_USER,
+                [settings.BACKOFFICE_EMAIL],
+                fail_silently=False,
+            )
+            return render(request, 'cliente/ladingPage/index.html', {'form': form, 'success': True})
     else:
-        return render(request, 'cliente/login/login.html')
+        form = CadastroForm()
+    return render(request, 'cliente/ladingPage/index.html', {'form': form})
 
-@never_cache
-def logout_view(request):
-    logout(request)
-    return redirect('cliente:home')
+
+def contacto_view(request):
+    if request.method == 'POST':
+        form = ContactoForm(request.POST)
+        if form.is_valid():
+            contacto = form.save()
+            send_mail(
+                'Novo Contacto Recebido',
+                f'Nome: {contacto.nome}\nEmail: {contacto.email}\nMensagem: {contacto.mensagem}',
+                settings.EMAIL_HOST_USER,
+                [settings.BACKOFFICE_EMAIL],
+                fail_silently=False,
+            )
+            return render(request, 'cliente/ladingPage/index.html', {'form': form, 'success': True})
+    else:
+        form = ContactoForm()
+    return render(request, 'cliente/ladingPage/index.html', {'form': form})

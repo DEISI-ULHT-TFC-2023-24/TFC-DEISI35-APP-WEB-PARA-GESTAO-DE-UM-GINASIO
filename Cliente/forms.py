@@ -1,12 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from backoffice.models import Cadastro, Contacto
 
 
-
-class SignUpForm(UserCreationForm):
-    # Adicione campos adicionais aqui, se você tiver um modelo de perfil de usuário
+class CadastroForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2',)
+        model = Cadastro
+        fields = ['nome', 'email', 'telemovel']
 
+class ContactoForm(forms.ModelForm):
+    class Meta:
+        model = Contacto
+        fields = ['nome', 'email', 'mensagem']

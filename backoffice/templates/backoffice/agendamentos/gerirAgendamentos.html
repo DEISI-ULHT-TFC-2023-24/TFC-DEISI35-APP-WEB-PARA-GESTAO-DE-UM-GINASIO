@@ -1,0 +1,172 @@
+{% extends 'backoffice/baseBackoffice/base.html' %}
+
+{% block extra_css_backoffice %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Agendamentos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+     <style>
+        article, aside, figcaption, figure, footer, header, hgroup, nav, section {
+            display: flex !important;
+        }
+
+        a:hover {
+            text-decoration: none;
+        !important;
+        }
+
+        .text-center {
+            margin-top: 4em;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block content-backoffice %}
+<body>
+<div class="container my-4">
+    <h1 class="text-center">Gestão de Agendamentos</h1>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="filter-nome"></label><input type="text" id="filter-nome" class="form-control" placeholder="Pesquisar por Nome...">
+        </div>
+        <div class="col-md-3">
+            <label for="filter-tipo"></label><input type="text" id="filter-tipo" class="form-control" placeholder="Pesquisar por Tipo...">
+        </div>
+        <div class="col-md-3">
+            <label for="filter-data"></label><input type="date" id="filter-data" class="form-control" placeholder="Pesquisar por Data...">
+        </div>
+        <div class="col-md-3">
+            <button id="clear-filters" class="btn btn-secondary">Limpar Filtros</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Email</th>
+            <th>Contato</th>
+            <th>Nota</th>
+            <th>Estado</th>
+            <th>Respondido por</th>
+            <th>Data de Resposta</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="agendamentos-list">
+        <!-- Agendamentos serão inseridos aqui via JavaScript -->
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const agendamentosList = document.getElementById('agendamentos-list');
+        const filterNome = document.getElementById('filter-nome');
+        const filterTipo = document.getElementById('filter-tipo');
+        const filterData = document.getElementById('filter-data');
+        const clearFilters = document.getElementById('clear-filters');
+
+        // Fetch agendamentos
+        let agendamentos = [];
+        fetch('/api/agendamentos/')
+            .then(response => response.json())
+            .then(data => {
+                agendamentos = data;
+                displayAgendamentos(agendamentos);
+            });
+
+        function displayAgendamentos(agendamentos) {
+            agendamentosList.innerHTML = '';
+            agendamentos.forEach(agendamento => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${agendamento.nome}</td>
+                    <td>${agendamento.tipo}</td>
+                    <td>${agendamento.data}</td>
+                    <td>${agendamento.hora}</td>
+                    <td>${agendamento.email}</td>
+                    <td>${agendamento.contato}</td>
+                    <td>${agendamento.nota || 'N/A'}</td>
+                    <td>${agendamento.estado ? 'Tratado' : 'Pendente'}</td>
+                    <td>${agendamento.respondido_por || 'N/A'}</td>
+                    <td>${agendamento.data_resposta || 'N/A'}</td>
+                    <td>
+                        <a href="mailto:${agendamento.email}" class="btn btn-primary btn-sm responder-btn">Responder</a>
+                        <input type="checkbox" class="validate-checkbox" ${agendamento.estado ? 'checked' : ''}>
+                    </td>
+                `;
+                agendamentosList.appendChild(row);
+            });
+
+            // Add event listeners to the "Responder" buttons
+            document.querySelectorAll('.responder-btn').forEach((button, index) => {
+                button.addEventListener('click', () => handleResponder(index));
+            });
+
+            // Add event listeners to the checkboxes
+            document.querySelectorAll('.validate-checkbox').forEach((checkbox, index) => {
+                checkbox.addEventListener('change', () => handleCheckboxChange(index, checkbox.checked));
+            });
+        }
+
+        function filterAgendamentos() {
+            const searchTermNome = filterNome.value.toLowerCase();
+            const searchTermTipo = filterTipo.value.toLowerCase();
+            const searchTermData = filterData.value;
+
+            const filteredAgendamentos = agendamentos.filter(agendamento => {
+                return (agendamento.nome.toLowerCase().includes(searchTermNome) || searchTermNome === '') &&
+                       (agendamento.tipo.toLowerCase().includes(searchTermTipo) || searchTermTipo === '') &&
+                       (agendamento.data.includes(searchTermData) || searchTermData === '');
+            });
+            displayAgendamentos(filteredAgendamentos);
+        }
+
+        function handleResponder(index) {
+            const user = 'current_user'; // Replace this with the current logged-in user
+            const currentDate = new Date().toISOString().split('T')[0];
+
+            agendamentos[index].estado = true;
+            agendamentos[index].respondido_por = user;
+            agendamentos[index].data_resposta = currentDate;
+
+            displayAgendamentos(agendamentos);
+        }
+
+        function handleCheckboxChange(index, checked) {
+            agendamentos[index].estado = checked;
+            if (checked) {
+                const user = 'current_user'; // Replace this with the current logged-in user
+                const currentDate = new Date().toISOString().split('T')[0];
+                agendamentos[index].respondido_por = user;
+                agendamentos[index].data_resposta = currentDate;
+            } else {
+                agendamentos[index].respondido_por = null;
+                agendamentos[index].data_resposta = null;
+            }
+
+            displayAgendamentos(agendamentos);
+        }
+
+        filterNome.addEventListener('input', filterAgendamentos);
+        filterTipo.addEventListener('input', filterAgendamentos);
+        filterData.addEventListener('input', filterAgendamentos);
+
+        clearFilters.addEventListener('click', () => {
+            filterNome.value = '';
+            filterTipo.value = '';
+            filterData.value = '';
+            displayAgendamentos(agendamentos);
+        });
+    });
+</script>
+</body>
+{% endblock %}
