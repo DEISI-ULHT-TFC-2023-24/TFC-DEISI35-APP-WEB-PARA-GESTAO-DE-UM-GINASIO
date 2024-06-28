@@ -51,7 +51,7 @@ No diretório raiz do projeto, execute os seguintes comandos para criar os aplic
 ---
 
 ## Imagem:
-![alt text](../../Downloads/PtClinic-1.jpeg)
+![alt text](media/print/PtClinic-1.jpeg)
 
 ### Texto:
 O projeto consiste em desenvolver uma aplicação web para a gestão do ginásio PT CLINIC, visando substituir ferramentas tradicionais como Excel e Word. A aplicação foi concebida para centralizar a gestão do ginásio, melhorando a eficiência operacional e a experiência dos utilizadores. O desenvolvimento abrangeu desde a identificação do problema até a implementação e testes. A aplicação é dividida em duas interfaces: uma para o utilizador final e outra para a administração (BackOffice). A transformação digital pretendida simplifica o agendamento de aulas, facilita o acesso a informações importantes e melhora a comunicação entre a equipa do ginásio e os clientes. A análise de viabilidade foi realizada através de inquéritos com profissionais, gestores e clientes, confirmando a necessidade da solução. A arquitetura de software utiliza o framework Django, com MySQL, HTML, CSS, JavaScript e Git, garantindo uma solução robusta e eficaz.
